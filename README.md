@@ -17,6 +17,7 @@ This repository contains the project groups, assigned topics, README files, and 
 | Group 09 | Yog Raisagar, Shivam Dewangan, Mahendra Sahu, Nikita Sahu | Digital Content Creation | [README](Groups/Group-09/README.md) | [Presentation](Groups/Group-09/Presentation.pdf) |
 | Group 10 | Sahil Markam, Devesh Sahu, M. Zaid | Rental Platform | [README](Groups/Group-10/README.md) | [Presentation](Groups/Group-10/Presentation.pptx) |
 | Group 11 | Pratham Singh, Chirag Gupta, Abhishek Sahu | Online Yoga and Zumba Course | [README](Groups/Group-11/README.md) | [Presentation](Groups/Group-11/Presentation.pdf) |
+| Group 12 | Saurabh Yadav, Shashank Singh, Ankit Kumar, Ayush Khuntiya, Ashutosh Kumar Anand | Amazon KDP | [README](Groups/Group-12/README.md) | [Presentation](Groups/Group-12/Presentation.pdf) |
 
 ## Folder Structure
 
@@ -60,6 +61,9 @@ Project-Submissions/
     ├── Group-11/
     │   ├── README.md
     │   └── Presentation.<original-format>
+    └── Group-12/
+        ├── README.md
+        └── Presentation.<original-format>
 ```
 
 ## Note
