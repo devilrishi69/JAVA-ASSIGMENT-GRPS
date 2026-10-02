@@ -1,5 +1,14 @@
 # DataForge
 
+## Team Contributions
+
+- **Rishi Raj Singh** — Built the DataForge scraping bot and developed the main project functionality.
+- **Balraj** — Researched dataset pricing and pricing models.
+- **Pratima** — Created the PowerPoint presentation and documentation.
+- **Naina** — Researched the project's content, advantages, and disadvantages.
+
+---
+
 DataForge is a Python-based data scraping and processing prototype designed to demonstrate how publicly available data can be collected, cleaned, analyzed, exported, and prepared for potential monetization.
 
 The project runs completely through a terminal interface and is designed as a simple college project.
