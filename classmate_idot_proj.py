@@ -1,342 +1,252 @@
 import json
+import os
 import shutil
 import subprocess
-from pathlib import Path
-
-# ==================================================
-# REPOSITORY CONFIGURATION
-# ==================================================
-
-REPO_DIR = Path(__file__).resolve().parent
-GROUPS_DIR = REPO_DIR / "Groups"
-DATA_FILE = REPO_DIR / "groups.json"
-MASTER_README = REPO_DIR / "README.md"
 
 
-# ==================================================
-# INITIAL GROUP DATA
-# ==================================================
-
-INITIAL_GROUPS = {
-    "1": {
-        "topic": "Scrape Bot",
-        "members": ["Rishi", "Balraj", "Pratima", "Naina"],
-        "github": ""
-    },
-
-    "2": {
-        "topic": "Handmade E-Commerce Business",
-        "members": [
-            "Seha Parasher",
-            "Diksha Chaubey",
-            "Puja Singh",
-            "Kunal Rathore"
-        ],
-        "github": ""
-    },
-
-    "3": {
-        "topic": "Affiliate Marketing",
-        "members": [
-            "Yash Gohar",
-            "Devashish Sharma",
-            "Tanistha",
-            "Ritesh"
-        ],
-        "github": ""
-    },
-
-    "4": {
-        "topic": "Article Writing",
-        "members": [
-            "Ankit Chaudhary",
-            "Keshari Nandan Mallik",
-            "Sachin Kumar",
-            "Dhananjay Thakur",
-            "Y. Vijay Chandan"
-        ],
-        "github": ""
-    },
-
-    "5": {
-        "topic": "Animation Through Freelancing in Java",
-        "members": [
-            "Tanu Rathore",
-            "Arth Sharma",
-            "Ansuman Mistry",
-            "Tuleshwar Kumar Yadav"
-        ],
-        "github": ""
-    },
-
-    "6": {
-        "topic": "Cloud Kitchen",
-        "members": [
-            "Aanya",
-            "Sandhya"
-        ],
-        "github": ""
-    },
-
-    "7": {
-        "topic": "Rural Supply Chain Digitization",
-        "members": [
-            "Ayush Kumar",
-            "Vasudev Choudhary",
-            "Saumil Kurre",
-            "Shivam Sharma"
-        ],
-        "github": "https://github.com/Vasudeveloperr/java-project-rural-connect"
-    },
-
-    "8": {
-        "topic": "Dropshipping Business",
-        "members": [
-            "Anshuka",
-            "Ayush Rajput",
-            "Harshwardhan Dhusia",
-            "Anjali"
-        ],
-        "github": ""
-    },
-
-    "9": {
-        "topic": "Digital Content Creation",
-        "members": [
-            "Yog Raisagar",
-            "Shivam Dewangan",
-            "Mahendra Sahu",
-            "Nikita Sahu"
-        ],
-        "github": ""
-    },
-
-    "10": {
-        "topic": "Rental Platform",
-        "members": [
-            "Sahil Markam",
-            "Devesh Sahu",
-            "M. Zaid"
-        ],
-        "github": ""
-    },
-
-    "11": {
-        "topic": "Online Yoga and Zumba Course",
-        "members": [
-            "Pratham Singh",
-            "Chirag Gupta",
-            "Abhishek Sahu"
-        ],
-        "github": ""
-    },
-
-    "12": {
-        "topic": "Amazon KDP",
-        "members": [
-            "Saurabh Yadav",
-            "Shashank Singh",
-            "Ankit Kumar",
-            "Ayush Khuntiya",
-            "Ashutosh Kumar Anand"
-        ],
-        "github": ""
-    }
-}
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+GROUPS_FILE = os.path.join(BASE_DIR, "groups.json")
+GROUPS_DIR = os.path.join(BASE_DIR, "Groups")
+MASTER_README = os.path.join(BASE_DIR, "README.md")
 
 
-# ==================================================
-# DATA FUNCTIONS
-# ==================================================
+# ============================================================
+# BASIC HELPERS
+# ============================================================
+
+def run_git(command):
+    """Run a git command safely on Windows."""
+    return subprocess.run(
+        command,
+        cwd=BASE_DIR,
+        capture_output=True,
+        text=True,
+        encoding="utf-8",
+        errors="replace"
+    )
+
 
 def load_groups():
+    if not os.path.exists(GROUPS_FILE):
+        print("\n❌ groups.json not found.")
+        return {}
 
-    if not DATA_FILE.exists():
-
-        with open(DATA_FILE, "w", encoding="utf-8") as file:
-            json.dump(
-                INITIAL_GROUPS,
-                file,
-                indent=4,
-                ensure_ascii=False
-            )
-
-        return INITIAL_GROUPS
-
-    with open(DATA_FILE, "r", encoding="utf-8") as file:
-        return json.load(file)
+    try:
+        with open(GROUPS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"\n❌ groups.json is invalid:\n{e}")
+        return {}
 
 
 def save_groups(groups):
+    with open(GROUPS_FILE, "w", encoding="utf-8") as f:
+        json.dump(groups, f, indent=4, ensure_ascii=False)
 
-    with open(DATA_FILE, "w", encoding="utf-8") as file:
-        json.dump(
-            groups,
-            file,
-            indent=4,
-            ensure_ascii=False
-        )
+    print("\n✅ groups.json updated.")
 
 
-# ==================================================
-# DISPLAY GROUPS
-# ==================================================
-
-def show_groups(groups):
-
-    print("\n" + "=" * 60)
-    print("AVAILABLE GROUPS")
-    print("=" * 60)
-
-    for number, group in sorted(
-        groups.items(),
-        key=lambda x: int(x[0])
-    ):
-
-        print(
-            f"{int(number):02d} - "
-            f"{group['topic']}"
-        )
-
-    print("=" * 60)
+def group_folder(group_id):
+    return os.path.join(GROUPS_DIR, f"Group-{int(group_id):02d}")
 
 
-# ==================================================
-# CHOOSE GROUP
-# ==================================================
-
-def choose_group(groups):
-
-    show_groups(groups)
-
-    number = input(
-        "Enter group number: "
-    ).strip()
-
-    if number not in groups:
-
-        print("\n❌ Invalid group number.")
+def get_presentation_file(folder):
+    if not os.path.exists(folder):
         return None
 
-    return number
+    allowed = [".pdf", ".pptx", ".ppt"]
+
+    for file in os.listdir(folder):
+        if os.path.splitext(file)[1].lower() in allowed:
+            return os.path.join(folder, file)
+
+    return None
 
 
-# ==================================================
+def press_enter():
+    input("\nPress Enter to continue...")
+
+
+# ============================================================
+# GROUP DISPLAY
+# ============================================================
+
+def list_groups(groups):
+    print("\n" + "=" * 70)
+    print("PROJECT GROUPS")
+    print("=" * 70)
+
+    if not groups:
+        print("No groups found.")
+        return
+
+    for group_id, data in groups.items():
+        topic = data.get("topic", "No topic")
+        members = data.get("members", [])
+
+        print(f"\nGroup {int(group_id):02d}")
+        print(f"  Topic   : {topic}")
+        print(f"  Members : {', '.join(members) if members else 'None'}")
+
+        github = data.get("github", "")
+        if github:
+            print(f"  GitHub  : {github}")
+        else:
+            print("  GitHub  : Not provided")
+
+
+def select_group(groups):
+    list_groups(groups)
+
+    if not groups:
+        return None
+
+    group_id = input("\nEnter group number: ").strip()
+
+    if group_id not in groups:
+        print("\n❌ Group not found.")
+        return None
+
+    return group_id
+
+
+# ============================================================
 # VIEW GROUP
-# ==================================================
+# ============================================================
 
 def view_group(groups):
+    group_id = select_group(groups)
 
-    number = choose_group(groups)
-
-    if not number:
+    if group_id is None:
         return
 
-    group = groups[number]
+    data = groups[group_id]
+    folder = group_folder(group_id)
 
     print("\n" + "=" * 60)
-    print(f"GROUP {int(number):02d}")
+    print(f"GROUP {int(group_id):02d}")
     print("=" * 60)
 
-    print(f"Topic: {group['topic']}")
+    print(f"\nTopic:")
+    print(data.get("topic", "Not provided"))
 
     print("\nMembers:")
-
-    for member in group["members"]:
+    for member in data.get("members", []):
         print(f"  • {member}")
 
-    print("\nProject GitHub:")
+    print("\nGitHub:")
+    print(data.get("github") or "Not provided")
 
-    if group["github"]:
-        print(group["github"])
+    print("\nFiles:")
+
+    if os.path.exists(folder):
+        files = os.listdir(folder)
+
+        if files:
+            for file in files:
+                print(f"  • {file}")
+        else:
+            print("  No files.")
     else:
-        print("—")
+        print("  Group folder does not exist.")
 
-    print("=" * 60)
+    press_enter()
 
 
-# ==================================================
+# ============================================================
 # UPDATE GITHUB LINK
-# ==================================================
+# ============================================================
 
 def update_github(groups):
+    group_id = select_group(groups)
 
-    number = choose_group(groups)
-
-    if not number:
+    if group_id is None:
         return
 
-    group = groups[number]
+    current = groups[group_id].get("github", "")
 
     print("\nCurrent GitHub link:")
+    print(current if current else "None")
 
-    if group["github"]:
-        print(group["github"])
+    print("\nEnter the new GitHub repository URL.")
+    print("Type REMOVE if you intentionally want to remove it.")
+
+    new_link = input("\nGitHub URL: ").strip()
+
+    if not new_link:
+        print("\n⚠️ No input provided. Existing link was kept.")
+        return
+
+    if new_link.upper() == "REMOVE":
+        confirm = input(
+            "Type REMOVE again to confirm deletion of the GitHub link: "
+        ).strip()
+
+        if confirm != "REMOVE":
+            print("\n❌ GitHub link was not removed.")
+            return
+
+        groups[group_id]["github"] = ""
     else:
-        print("—")
-
-    new_link = input(
-        "\nEnter new GitHub link "
-        "(press ENTER to remove): "
-    ).strip()
-
-    group["github"] = new_link
+        groups[group_id]["github"] = new_link
 
     save_groups(groups)
+    print("\n✅ GitHub link updated.")
 
-    print("\n✓ GitHub link updated.")
 
-
-# ==================================================
+# ============================================================
 # ADD NEW GROUP
-# ==================================================
+# ============================================================
 
 def add_group(groups):
+    print("\n" + "=" * 60)
+    print("ADD NEW GROUP")
+    print("=" * 60)
 
-    existing_numbers = [
-        int(number)
-        for number in groups.keys()
-    ]
+    group_numbers = [int(x) for x in groups.keys() if str(x).isdigit()]
 
-    next_number = max(
-        existing_numbers,
-        default=0
-    ) + 1
+    next_number = max(group_numbers, default=0) + 1
 
-    print(
-        f"\nNext available group number: "
-        f"{next_number}"
-    )
+    print(f"\nSuggested group number: {next_number:02d}")
 
-    topic = input(
-        "Enter project topic: "
+    custom = input(
+        "Enter group number or press Enter to use suggested number: "
     ).strip()
+
+    group_id = custom if custom else str(next_number)
+
+    if not group_id.isdigit():
+        print("\n❌ Invalid group number.")
+        return
+
+    group_id = str(int(group_id))
+
+    if group_id in groups:
+        print("\n❌ That group already exists.")
+        return
+
+    topic = input("\nProject topic: ").strip()
+
+    if not topic:
+        print("\n❌ Topic cannot be empty.")
+        return
+
+    print("\nEnter member names one by one.")
+    print("Press Enter on an empty line when finished.")
 
     members = []
 
-    print("\nEnter member names.")
-    print(
-        "Press ENTER without typing a name "
-        "when you are finished."
-    )
-
     while True:
-
-        name = input(
-            "Member: "
-        ).strip()
+        name = input("Member: ").strip()
 
         if not name:
             break
 
         members.append(name)
 
-    github = input(
-        "\nProject GitHub URL "
-        "(leave blank if none): "
-    ).strip()
+    github = input("\nGitHub repository URL (optional): ").strip()
 
-    groups[str(next_number)] = {
+    groups[group_id] = {
         "topic": topic,
         "members": members,
         "github": github
@@ -344,672 +254,615 @@ def add_group(groups):
 
     save_groups(groups)
 
-    group_folder = (
-        GROUPS_DIR /
-        f"Group-{next_number:02d}"
-    )
+    folder = group_folder(group_id)
+    os.makedirs(folder, exist_ok=True)
 
-    group_folder.mkdir(
-        parents=True,
-        exist_ok=True
-    )
+    # Create initial README
+    readme_path = os.path.join(folder, "README.md")
 
-    print(
-        f"\n✓ Group {next_number:02d} created."
-    )
-
-
-# ==================================================
-# UPDATE GROUP README
-# ==================================================
-
-def update_readme(groups):
-
-    number = choose_group(groups)
-
-    if not number:
-        return
-
-    group_folder = (
-        GROUPS_DIR /
-        f"Group-{int(number):02d}"
-    )
-
-    readme_file = (
-        group_folder /
-        "README.md"
-    )
-
-    print("\nCurrent README:")
-    print(readme_file)
-
-    new_file = input(
-        "\nEnter path to the new README file: "
-    ).strip().strip('"')
-
-    new_file = Path(new_file)
-
-    if not new_file.exists():
-
-        print("\n❌ File not found.")
-        return
-
-    if not new_file.is_file():
-
-        print("\n❌ The path is not a file.")
-        return
-
-    if readme_file.exists():
-
-        print(
-            "\n⚠️ This will replace "
-            "the existing README."
-        )
-
-        confirm = input(
-            "Continue? (y/n): "
-        ).strip().lower()
-
-        if confirm != "y":
-
-            print("\n❌ Update cancelled.")
-            return
-
-    group_folder.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    shutil.copy2(
-        new_file,
-        readme_file
-    )
-
-    print(
-        f"\n✓ Group {int(number):02d} "
-        f"README updated."
-    )
-
-
-# ==================================================
-# FIND PRESENTATION
-# ==================================================
-
-def find_presentations(group_number):
-
-    group_folder = (
-        GROUPS_DIR /
-        f"Group-{int(group_number):02d}"
-    )
-
-    if not group_folder.exists():
-
-        return []
-
-    extensions = [
-        ".pdf",
-        ".pptx",
-        ".ppt"
-    ]
-
-    return [
-        file
-        for file in group_folder.iterdir()
-        if (
-            file.is_file()
-            and file.suffix.lower()
-            in extensions
-        )
-    ]
-
-
-# ==================================================
-# UPDATE GROUP PRESENTATION
-# ==================================================
-
-def update_presentation(groups):
-
-    number = choose_group(groups)
-
-    if not number:
-        return
-
-    group_folder = (
-        GROUPS_DIR /
-        f"Group-{int(number):02d}"
-    )
-
-    group_folder.mkdir(
-        parents=True,
-        exist_ok=True
-    )
-
-    existing_presentations = (
-        find_presentations(number)
-    )
-
-    if existing_presentations:
-
-        print("\nExisting presentation(s):")
-
-        for file in existing_presentations:
-
-            print(
-                f"  • {file.name}"
+    if not os.path.exists(readme_path):
+        with open(readme_path, "w", encoding="utf-8") as f:
+            f.write(
+                f"# {topic}\n\n"
+                f"## Members\n\n"
+                + "\n".join(f"- {member}" for member in members)
+                + "\n"
             )
 
+    print(f"\n✅ Group {int(group_id):02d} created.")
+    print(f"📁 Folder: Groups/Group-{int(group_id):02d}")
+
+
+# ============================================================
+# UPDATE GROUP README
+# ============================================================
+
+def update_readme(groups):
+    group_id = select_group(groups)
+
+    if group_id is None:
+        return
+
+    folder = group_folder(group_id)
+
+    if not os.path.exists(folder):
+        os.makedirs(folder, exist_ok=True)
+
+    print("\nCurrent README:")
+    print("-" * 60)
+
+    readme_path = os.path.join(folder, "README.md")
+
+    if os.path.exists(readme_path):
+        try:
+            with open(readme_path, "r", encoding="utf-8") as f:
+                print(f.read())
+        except UnicodeDecodeError:
+            print("⚠️ Existing README could not be read as UTF-8.")
     else:
+        print("No README exists.")
 
-        print(
-            "\nNo existing presentation found."
-        )
+    print("-" * 60)
 
-    new_file = input(
-        "\nEnter path to the new presentation: "
+    source = input(
+        "\nEnter the path to the new README file: "
     ).strip().strip('"')
 
-    new_file = Path(new_file)
-
-    if not new_file.exists():
-
+    if not os.path.isfile(source):
         print("\n❌ File not found.")
         return
 
-    if not new_file.is_file():
+    try:
+        shutil.copy2(source, readme_path)
+        print("\n✅ README replaced successfully.")
+    except Exception as e:
+        print(f"\n❌ Failed to replace README:\n{e}")
 
-        print("\n❌ The path is not a file.")
+
+# ============================================================
+# UPDATE PRESENTATION
+# ============================================================
+
+def update_presentation(groups):
+    group_id = select_group(groups)
+
+    if group_id is None:
         return
 
-    allowed_extensions = [
-        ".pdf",
-        ".pptx",
-        ".ppt"
-    ]
+    folder = group_folder(group_id)
+    os.makedirs(folder, exist_ok=True)
 
-    if new_file.suffix.lower() not in allowed_extensions:
+    print("\nSupported presentation formats:")
+    print("  PDF")
+    print("  PPTX")
+    print("  PPT")
 
-        print(
-            "\n❌ Unsupported presentation format."
-        )
+    source = input(
+        "\nEnter the path to the new presentation: "
+    ).strip().strip('"')
 
-        print(
-            "Allowed: .pdf, .pptx, .ppt"
-        )
-
+    if not os.path.isfile(source):
+        print("\n❌ File not found.")
         return
+
+    extension = os.path.splitext(source)[1].lower()
+
+    if extension not in [".pdf", ".pptx", ".ppt"]:
+        print("\n❌ Unsupported presentation format.")
+        print("Use .pdf, .pptx or .ppt.")
+        return
+
+    # Remove existing presentations
+    for file in os.listdir(folder):
+        ext = os.path.splitext(file)[1].lower()
+
+        if ext in [".pdf", ".pptx", ".ppt"]:
+            old_path = os.path.join(folder, file)
+
+            try:
+                os.remove(old_path)
+                print(f"🗑️ Removed old presentation: {file}")
+            except Exception as e:
+                print(f"❌ Could not remove {file}: {e}")
+                return
+
+    destination = os.path.join(
+        folder,
+        f"Presentation{extension}"
+    )
+
+    try:
+        shutil.copy2(source, destination)
+        print("\n✅ Presentation replaced successfully.")
+        print(f"📄 {os.path.basename(destination)}")
+    except Exception as e:
+        print(f"\n❌ Failed to copy presentation:\n{e}")
+
+
+# ============================================================
+# DELETE GROUP
+# ============================================================
+
+def delete_group(groups):
+    group_id = select_group(groups)
+
+    if group_id is None:
+        return
+
+    data = groups[group_id]
+
+    print("\n" + "=" * 60)
+    print("⚠️ DELETE GROUP")
+    print("=" * 60)
+
+    print(f"\nGroup: {int(group_id):02d}")
+    print(f"Topic: {data.get('topic', 'Unknown')}")
+
+    print("\nMembers:")
+    for member in data.get("members", []):
+        print(f"  • {member}")
+
+    print("\n⚠️ This will delete:")
+    print(f"  • Group {int(group_id):02d} from groups.json")
+    print(f"  • Groups/Group-{int(group_id):02d}/ and everything inside it")
+
+    print("\nThis action changes your local working directory.")
+    print("It will NOT be pushed to GitHub until you commit and push.")
 
     confirm = input(
-        "\nReplace the current presentation? (y/n): "
-    ).strip().lower()
+        "\nType DELETE to confirm: "
+    ).strip()
 
-    if confirm != "y":
-
-        print("\n❌ Update cancelled.")
+    if confirm != "DELETE":
+        print("\n❌ Deletion cancelled.")
         return
 
-    # Remove old presentations
-    for old_file in existing_presentations:
+    # Remove metadata
+    del groups[group_id]
+    save_groups(groups)
 
-        old_file.unlink()
+    # Remove folder
+    folder = group_folder(group_id)
 
-    # Keep the new file's filename
-    destination = (
-        group_folder /
-        new_file.name
-    )
+    if os.path.exists(folder):
+        try:
+            shutil.rmtree(folder)
+            print(f"🗑️ Deleted folder: Groups/Group-{int(group_id):02d}")
+        except Exception as e:
+            print(f"\n❌ Could not delete group folder:\n{e}")
+            return
 
-    shutil.copy2(
-        new_file,
-        destination
-    )
-
-    print(
-        f"\n✓ Group {int(number):02d} "
-        f"presentation updated."
-    )
-
-    print(
-        f"Saved as: {destination.name}"
-    )
+    print(f"\n✅ Group {int(group_id):02d} completely removed.")
 
 
-# ==================================================
-# FIND PRESENTATION FOR README
-# ==================================================
-
-def find_presentation(group_number):
-
-    presentations = (
-        find_presentations(group_number)
-    )
-
-    if not presentations:
-
-        return None
-
-    return presentations[0]
-
-
-# ==================================================
-# GENERATE MASTER README
-# ==================================================
+# ============================================================
+# MASTER README
+# ============================================================
 
 def generate_master_readme(groups):
+    print("\nGenerating master README...")
 
-    if not MASTER_README.exists():
-
-        print(
-            "\n❌ Master README.md not found."
-        )
-
+    if not os.path.exists(MASTER_README):
+        print("\n❌ README.md not found.")
         return
 
-    with open(
-        MASTER_README,
-        "r",
-        encoding="utf-8"
-    ) as file:
-
-        content = file.read()
+    try:
+        with open(MASTER_README, "r", encoding="utf-8") as f:
+            content = f.read()
+    except Exception as e:
+        print(f"\n❌ Could not read README.md:\n{e}")
+        return
 
     start_marker = "## Project Groups"
     end_marker = "## Folder Structure"
 
-    start_index = content.find(
-        start_marker
-    )
+    start = content.find(start_marker)
+    end = content.find(end_marker)
 
-    end_index = content.find(
-        end_marker
-    )
-
-    if start_index == -1:
-
-        print(
-            "\n❌ Could not find "
-            "'## Project Groups'."
-        )
-
-        print(
-            "README was NOT changed."
-        )
-
+    if start == -1 or end == -1 or end <= start:
+        print("\n❌ Could not find README section markers.")
+        print("Expected:")
+        print("  ## Project Groups")
+        print("  ## Folder Structure")
         return
 
-    if end_index == -1:
+    rows = []
 
-        print(
-            "\n❌ Could not find "
-            "'## Folder Structure'."
+    for group_id in sorted(groups.keys(), key=lambda x: int(x)):
+        data = groups[group_id]
+
+        number = int(group_id)
+        topic = data.get("topic", "Not provided")
+        members = data.get("members", [])
+        github = data.get("github", "")
+
+        folder = f"Groups/Group-{number:02d}"
+        readme_link = f"{folder}/README.md"
+
+        presentation = get_presentation_file(
+            os.path.join(BASE_DIR, folder)
         )
 
-        print(
-            "README was NOT changed."
-        )
-
-        return
-
-    table = []
-
-    table.append(
-        "## Project Groups\n"
-    )
-
-    table.append(
-        "| Group | Members | Project Topic | README | Presentation | Project GitHub |"
-    )
-
-    table.append(
-        "|---|---|---|---|---|---|"
-    )
-
-    for number, group in sorted(
-        groups.items(),
-        key=lambda x: int(x[0])
-    ):
-
-        group_number = int(number)
-
-        group_folder = (
-            f"Groups/Group-{group_number:02d}"
-        )
-
-        readme_file = (
-            GROUPS_DIR /
-            f"Group-{group_number:02d}" /
-            "README.md"
-        )
-
-        presentation = (
-            find_presentation(
-                group_number
-            )
-        )
-
-        # README
-        if readme_file.exists():
-
-            readme_link = (
-                f"[README]"
-                f"({group_folder}/README.md)"
-            )
-
-        else:
-
-            readme_link = "—"
-
-        # Presentation
         if presentation:
-
-            presentation_link = (
-                f"[Presentation]"
-                f"({group_folder}/{presentation.name})"
-            )
-
+            extension = os.path.splitext(presentation)[1]
+            presentation_link = f"{folder}/Presentation{extension}"
         else:
+            presentation_link = ""
 
-            presentation_link = "—"
+        member_text = ", ".join(members)
 
-        # GitHub
-        if group["github"]:
-
-            github_link = (
-                f"[GitHub]"
-                f"({group['github']})"
+        readme_cell = (
+            f"[README]({readme_link})"
+            if os.path.exists(
+                os.path.join(BASE_DIR, readme_link.replace("/", os.sep))
             )
-
-        else:
-
-            github_link = "—"
-
-        members = ", ".join(
-            group["members"]
+            else "Not available"
         )
 
-        table.append(
-            f"| Group {group_number:02d} | "
-            f"{members} | "
-            f"{group['topic']} | "
-            f"{readme_link} | "
-            f"{presentation_link} | "
-            f"{github_link} |"
+        if presentation_link:
+            presentation_cell = (
+                f"[Presentation]({presentation_link})"
+            )
+        else:
+            presentation_cell = "Not available"
+
+        github_cell = (
+            f"[GitHub]({github})"
+            if github
+            else "Not provided"
         )
 
-    table.append("")
+        rows.append(
+            f"| Group {number:02d} | {member_text} | {topic} | "
+            f"{readme_cell} | {presentation_cell} | {github_cell} |"
+        )
 
-    new_section = "\n".join(table)
+    new_section = (
+        "## Project Groups\n\n"
+        "| Group | Members | Project Topic | README | Presentation | GitHub |\n"
+        "|---|---|---|---|---|---|\n"
+        + "\n".join(rows)
+        + "\n\n"
+    )
 
     new_content = (
-        content[:start_index]
+        content[:start]
         + new_section
-        + content[end_index:]
+        + content[end:]
     )
 
-    confirm = input(
-        "\nRegenerate the Project Groups table? (y/n): "
-    ).strip().lower()
+    try:
+        with open(MASTER_README, "w", encoding="utf-8") as f:
+            f.write(new_content)
 
-    if confirm != "y":
+        print("\n✅ Master README regenerated successfully.")
 
-        print(
-            "\n❌ README generation cancelled."
-        )
-
-        return
-
-    with open(
-        MASTER_README,
-        "w",
-        encoding="utf-8"
-    ) as file:
-
-        file.write(new_content)
-
-    print(
-        "\n✓ Master README updated."
-    )
+    except Exception as e:
+        print(f"\n❌ Failed to update master README:\n{e}")
 
 
-# ==================================================
-# COMMIT & PUSH
-# ==================================================
+# ============================================================
+# REVIEW CHANGES
+# ============================================================
 
-def commit_and_push():
+def review_changes():
+    print("\n" + "=" * 70)
+    print("GIT CHANGES")
+    print("=" * 70)
 
-    print("\n" + "=" * 60)
-    print("GIT STATUS")
-    print("=" * 60)
-
-    status = subprocess.run(
-        [
-            "git",
-            "status",
-            "--short"
-        ],
-        cwd=REPO_DIR,
-        capture_output=True,
-        text=True
-    )
+    status = run_git(["git", "status", "--short"])
 
     if status.returncode != 0:
-
-        print(
-            "\n❌ Could not read Git status."
-        )
-
+        print("\n❌ Git status failed.")
         print(status.stderr)
-
         return
 
     if not status.stdout.strip():
-
-        print(
-            "\n✓ No changes to commit."
-        )
-
+        print("\n✅ Working tree is clean.")
         return
 
+    print("\nCurrent changes:")
+    print("-" * 70)
     print(status.stdout)
 
-    confirm = input(
-        "\nCommit and push these changes? (y/n): "
+    print("\nChange summary:")
+    print("-" * 70)
+
+    diff_names = run_git(
+        ["git", "diff", "--name-status"]
+    )
+
+    if diff_names.stdout.strip():
+        print(diff_names.stdout)
+
+    print("\nStatistics:")
+    print("-" * 70)
+
+    diff_stat = run_git(
+        ["git", "diff", "--stat"]
+    )
+
+    if diff_stat.stdout.strip():
+        print(diff_stat.stdout)
+
+    press_enter()
+
+
+# ============================================================
+# COMMIT & PUSH
+# ============================================================
+
+def commit_and_push():
+    print("\n" + "=" * 70)
+    print("COMMIT & PUSH")
+    print("=" * 70)
+
+    # --------------------------------------------------------
+    # 1. Check current status
+    # --------------------------------------------------------
+
+    status = run_git(["git", "status", "--short"])
+
+    if status.returncode != 0:
+        print("\n❌ Could not read Git status.")
+        print(status.stderr)
+        return
+
+    if not status.stdout.strip():
+        print("\n✅ No changes to commit.")
+        return
+
+    print("\nCurrent changes:")
+    print("-" * 70)
+    print(status.stdout)
+
+    # --------------------------------------------------------
+    # 2. SAFE CHANGE SUMMARY
+    #
+    # IMPORTANT:
+    # Do NOT use `git diff` directly.
+    #
+    # PDFs/PPT/PPTX are binary files and Windows can throw
+    # UnicodeDecodeError when Python tries to read their
+    # contents as text.
+    # --------------------------------------------------------
+
+    print("\nChange summary:")
+    print("-" * 70)
+
+    diff_names = run_git(
+        ["git", "diff", "--name-status"]
+    )
+
+    if diff_names.stdout.strip():
+        print(diff_names.stdout)
+
+    diff_stat = run_git(
+        ["git", "diff", "--stat"]
+    )
+
+    if diff_stat.stdout.strip():
+        print("-" * 70)
+        print(diff_stat.stdout)
+
+    # --------------------------------------------------------
+    # 3. First confirmation
+    # --------------------------------------------------------
+
+    print("\n⚠️ Review the changes above carefully.")
+
+    review = input(
+        "Have you reviewed these changes? (y/n): "
     ).strip().lower()
 
-    if confirm != "y":
-
-        print(
-            "\n❌ Commit cancelled."
-        )
-
+    if review != "y":
+        print("\n❌ Commit cancelled.")
         return
 
-    # ------------------------------
-    # GIT ADD
-    # ------------------------------
+    # --------------------------------------------------------
+    # 4. Strong confirmation
+    # --------------------------------------------------------
 
-    add = subprocess.run(
-        [
-            "git",
-            "add",
-            "."
-        ],
-        cwd=REPO_DIR,
-        capture_output=True,
-        text=True
-    )
+    print("\n⚠️ WARNING")
+    print("The next step will stage ALL current changes.")
+    print("This includes:")
+    print("  • Modified files")
+    print("  • New files")
+    print("  • Deleted files")
+    print("  • Binary files such as PDF/PPT/PPTX")
 
-    if add.returncode != 0:
+    push_confirm = input(
+        "\nType PUSH to continue: "
+    ).strip()
 
-        print(
-            "\n❌ Git add failed."
-        )
-
-        print(add.stderr)
-
+    if push_confirm != "PUSH":
+        print("\n❌ Commit cancelled.")
         return
 
-    # ------------------------------
-    # GIT COMMIT
-    # ------------------------------
+    # --------------------------------------------------------
+    # 5. Stage everything
+    # --------------------------------------------------------
 
-    commit = subprocess.run(
-        [
-            "git",
-            "commit",
-            "-m",
-            "Update project submissions"
-        ],
-        cwd=REPO_DIR,
-        capture_output=True,
-        text=True
-    )
+    print("\n📦 Staging changes...")
 
-    if commit.returncode != 0:
+    add_result = run_git(["git", "add", "."])
 
-        print(
-            "\n❌ Git commit failed."
-        )
-
-        print(commit.stderr)
-
+    if add_result.returncode != 0:
+        print("\n❌ Failed to stage changes.")
+        print(add_result.stderr)
         return
 
-    print(
-        "\n✓ Changes committed."
+    print("✅ Changes staged.")
+
+    # --------------------------------------------------------
+    # 6. Show EXACT staged changes
+    # --------------------------------------------------------
+
+    print("\nStaged changes:")
+    print("-" * 70)
+
+    staged = run_git(
+        ["git", "diff", "--cached", "--name-status"]
     )
 
-    # ------------------------------
-    # GIT PUSH
-    # ------------------------------
-
-    push = subprocess.run(
-        [
-            "git",
-            "push",
-            "origin",
-            "main"
-        ],
-        cwd=REPO_DIR,
-        capture_output=True,
-        text=True
-    )
-
-    if push.returncode != 0:
-
-        print(
-            "\n❌ Git push failed."
-        )
-
-        print(push.stderr)
-
+    if staged.returncode != 0:
+        print("\n❌ Could not inspect staged changes.")
+        print(staged.stderr)
         return
 
-    print(
-        "\n✓ Changes pushed to GitHub successfully!"
+    if not staged.stdout.strip():
+        print("\n❌ Nothing was staged.")
+        return
+
+    print(staged.stdout)
+
+    # --------------------------------------------------------
+    # 7. Show staged statistics
+    # --------------------------------------------------------
+
+    staged_stat = run_git(
+        ["git", "diff", "--cached", "--stat"]
     )
 
+    if staged_stat.stdout.strip():
+        print("-" * 70)
+        print(staged_stat.stdout)
 
-# ==================================================
+    # --------------------------------------------------------
+    # 8. FINAL CONFIRMATION
+    # --------------------------------------------------------
+
+    print("\n⚠️ FINAL CHECK")
+    print("These are the exact files Git is about to commit.")
+
+    final_confirm = input(
+        "\nCommit EXACTLY these staged changes? (y/n): "
+    ).strip().lower()
+
+    if final_confirm != "y":
+        print("\n❌ Commit cancelled.")
+        print("The files remain staged.")
+        print("Nothing was committed or pushed.")
+        return
+
+    # --------------------------------------------------------
+    # 9. COMMIT
+    # --------------------------------------------------------
+
+    print("\n💾 Creating commit...")
+
+    commit_result = run_git(
+        ["git", "commit", "-m", "Update project submissions"]
+    )
+
+    if commit_result.stdout.strip():
+        print(commit_result.stdout)
+
+    if commit_result.returncode != 0:
+        print("\n❌ Commit failed.")
+        print(commit_result.stderr)
+        return
+
+    print("✅ Commit created.")
+
+    # --------------------------------------------------------
+    # 10. PUSH
+    # --------------------------------------------------------
+
+    print("\n🚀 Pushing to GitHub...")
+
+    push_result = run_git(
+        ["git", "push", "origin", "main"]
+    )
+
+    if push_result.stdout.strip():
+        print(push_result.stdout)
+
+    if push_result.returncode != 0:
+        print("\n❌ Push failed.")
+        print(push_result.stderr)
+        return
+
+    print("\n" + "=" * 70)
+    print("✅ COMMIT AND PUSH SUCCESSFUL")
+    print("=" * 70)
+
+    # --------------------------------------------------------
+    # 11. Final status
+    # --------------------------------------------------------
+
+    final_status = run_git(
+        ["git", "status", "--short"]
+    )
+
+    if final_status.stdout.strip():
+        print("\n⚠️ There are still local changes:")
+        print(final_status.stdout)
+    else:
+        print("\n✅ Working tree is clean.")
+
+
+# ============================================================
 # MAIN MENU
-# ==================================================
+# ============================================================
 
 def main():
-
-    groups = load_groups()
-
     while True:
+        groups = load_groups()
 
         print("\n")
-        print("=" * 60)
-        print(
-            "       PROJECT REPOSITORY MANAGER"
-        )
-        print("=" * 60)
+        print("=" * 70)
+        print("        JAVA PROJECT GROUP MANAGER")
+        print("=" * 70)
 
-        print(
-            "1. View Group"
-        )
+        print("\n1. View Group")
+        print("2. Update Project GitHub Link")
+        print("3. Add New Group")
+        print("4. Update Group README")
+        print("5. Update Group Presentation")
+        print("6. Delete Group")
+        print("7. Regenerate Master README")
+        print("8. Review Uncommitted Changes")
+        print("9. Commit & Push Changes")
+        print("10. Exit")
 
-        print(
-            "2. Update Project GitHub Link"
-        )
-
-        print(
-            "3. Add New Group"
-        )
-
-        print(
-            "4. Update Group README"
-        )
-
-        print(
-            "5. Update Group Presentation"
-        )
-
-        print(
-            "6. Regenerate Master README"
-        )
-
-        print(
-            "7. Commit & Push Changes"
-        )
-
-        print(
-            "8. Exit"
-        )
-
-        print("=" * 60)
-
-        choice = input(
-            "Choose an option: "
-        ).strip()
+        choice = input("\nChoose an option: ").strip()
 
         if choice == "1":
-
             view_group(groups)
 
         elif choice == "2":
-
             update_github(groups)
 
         elif choice == "3":
-
             add_group(groups)
 
         elif choice == "4":
-
             update_readme(groups)
 
         elif choice == "5":
-
             update_presentation(groups)
 
         elif choice == "6":
-
-            generate_master_readme(groups)
+            delete_group(groups)
 
         elif choice == "7":
-
-            commit_and_push()
+            generate_master_readme(groups)
 
         elif choice == "8":
+            review_changes()
 
-            print(
-                "\nGoodbye!"
-            )
+        elif choice == "9":
+            commit_and_push()
 
+        elif choice == "10":
+            print("\nGoodbye 👋")
             break
 
         else:
+            print("\n❌ Invalid option.")
+            press_enter()
 
-            print(
-                "\n❌ Invalid choice."
-            )
-
-
-# ==================================================
-# START PROGRAM
-# ==================================================
 
 if __name__ == "__main__":
     main()
