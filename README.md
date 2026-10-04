@@ -6,7 +6,7 @@ This repository contains the project groups, assigned topics, README files, and 
 
 | Group | Members | Project Topic | README | Presentation | GitHub |
 |---|---|---|---|---|---|
-| Group 01 | Rishi, Balraj, Pratima, Naina | Scrape Bot | [README](Groups/Group-01/README.md) | [Presentation](Groups/Group-01/Presentation.pdf) | Not provided |
+| Group 01 | Rishi, Balraj, Pratima, Naina | Scrape Bot | [README](Groups/Group-01/README.md) | [Presentation](Groups/Group-01/Presentation.pdf) | [GitHub](https://github.com/devilrishi69/JAVA-ASSIGMENT-GRPS) |
 | Group 02 | Seha Parasher, Diksha Chaubey, Puja Singh, Kunal Rathore | Handmade E-Commerce Business | [README](Groups/Group-02/README.md) | [Presentation](Groups/Group-02/Presentation.pdf) | Not provided |
 | Group 03 | Yash Gohar, Devashish Sharma, Tanistha, Ritesh | Affiliate Marketing | [README](Groups/Group-03/README.md) | [Presentation](Groups/Group-03/Presentation.pdf) | Not provided |
 | Group 04 | Ankit Chaudhary, Keshari Nandan Mallik, Sachin Kumar, Dhananjay Thakur, Y. Vijay Chandan | Article Writing | [README](Groups/Group-04/README.md) | [Presentation](Groups/Group-04/Presentation.pptx) | Not provided |
