@@ -1,107 +1,364 @@
-# Bespoke Gift Advisory: A Therapeutic Mobile-First Business Model
+# GRAPHIC DESIGN
 
-> **Moneycontrol Classroom Assignment** — *Business Model Innovation*  
-> **Created by:** Ojaswi & Aryan  
+## Visual Communication
+**From visual ideas → marketable creative work**
 
----
-
-## 📌 Executive Summary
-
-**Bespoke Gift Advisory** is a mobile-first consultancy model designed to bridge the gap between **mental health consulting** and **tactile art creation**. Moving away from traditional, anonymous e-commerce retail, this business operates entirely through a smartphone to transform personal milestones, emotional journeys, grief, and triumphs into permanent physical keepsakes.
-
-The model addresses severe modern digital fatigue and alienation by providing emotional validation, active listening, and physical grounding through custom-crafted art.
+**Presented by:** Ayush Khuntiya  
+**BCA 5th Semester**  
+**2026**
 
 ---
 
-## 🏛️ Core Psychological Pillars
+# 01 — THE BASICS
 
-| Pillar | Title | Description |
-| :--- | :--- | :--- |
-| **Pillar I** | **Active Listening (Mental Health Focus)** | Serves as a therapeutic sounding board where clients express trauma, triumphs, and aspirations during guided sessions. |
-| **Pillar II** | **Physical Anchor (Tactile Grounding)** | Translates abstract psychological states into physical, handcrafted items (e.g., sculpted keepsakes) to ground inner healing into a tangible object. |
-| **Pillar III** | **Deep Customization (Bespoke Advisory)** | Offers fully tailored engagements celebrating specific milestones (weddings, career promotions, grief recovery, or personal breakthroughs) rather than stocking mass-market inventory. |
+## Graphic Design
 
----
+Good design makes a message easier to notice, understand and remember.
 
-## 🔄 4-Step Advisory & Creation Framework
+> **Design is not decoration. It is communication with intent.**
 
-```
-[Phase 01: Empathy] ➔ [Phase 02: Conceptual Mapping] ➔ [Phase 03: Mindful Crafting] ➔ [Phase 04: Permanent Delivery]
-```
+### IDEA
+- Message
+- Goal
+- Audience
 
-1. **Phase 01: Empathy & Listening**
-   * **Action:** Conduct 45-minute mobile video/audio sessions.
-   * **Focus:** Deep listening to client stories, emotional blocks, milestones, or grief to establish therapeutic trust.
-2. **Phase 02: Conceptual Mapping**
-   * **Action:** Translate intangible feelings, textures, and symbolic memories into concrete visual sketches and material color palettes.
-   * **Focus:** Delivered directly to the client's phone for immediate approval.
-3. **Phase 03: Mindful Crafting**
-   * **Action:** Handcraft the physical sculpture or keepsake with deliberate pacing and high precision.
-   * **Focus:** Share short progress clips via mobile to keep the client emotionally connected.
-4. **Phase 04: Permanent Delivery**
-   * **Action:** Ship the finished tactile piece accompanied by a personalized advisory note.
-   * **Focus:** Explains the symbolic meaning embedded into every curve and texture of the art.
+### DESIGN
+- Type
+- Color
+- Layout
+- Imagery
+
+### IMPACT
+- Attention
+- Clarity
+- Action
 
 ---
 
-## 💰 Monetization & Financial Sustainability
+# 02 — DESIGN FUNDAMENTALS
 
-A robust **dual-revenue architecture** combining professional consultation fees with premium bespoke commission pricing:
+## The 5 rules behind strong visual work
 
-```
-                          ┌─── Stream A: Intellectual Service Revenue (Advisory Fees)
-Dual-Revenue Architecture ┤
-                          └─── Stream B: Tangible Artifact Revenue (Custom Commission Pricing)
-```
+### 01 — Hierarchy
+Tell the eye what to read first.
 
-* **Stream A: Intellectual Service Revenue (Advisory & Consultation Fees)**
-  * Upfront fee for listening sessions, emotional assessment, and tailored creative direction.
-  * Zero inventory risk during consultation.
-  * Directly monetizes expertise and time.
-* **Stream B: Tangible Artifact Revenue (Custom Commission Pricing)**
-  * Premium pricing based on material craftsmanship and emotional uniqueness.
-  * Price sensitivity is minimal due to the deeply personal nature of milestones (weddings, recovery, memorials).
-  * High repeat customer and referral rates.
+### 02 — Contrast
+Create clear differences and focus.
 
----
+### 03 — Typography
+Use type to set tone and improve readability.
 
-## 📱 Mobile-First Operations (Zero Desktop Hardware)
+### 04 — Whitespace
+Give important elements room to breathe.
 
-Designed specifically to run a profitable business model with zero computer hardware and near-zero capital overhead:
-
-* **Mobile Video Apps:** Conduct virtual consultations and build emotional trust via smartphone video/voice calls.
-* **Smartphone Camera:** Filming short behind-the-scenes creation clips and storytelling content for organic social media marketing.
-* **Mobile Wallets & Banking:** Managing bookings, deposit invoices, and digital payments directly via mobile applications without desktop software.
+### 05 — Consistency
+Repeat visual choices to build a system.
 
 ---
 
-## 📊 Market Positioning: Advisory vs. Standard Retail
+# 03 — WHAT YOU CAN CREATE
 
-| Feature / Metric | Standard E-Commerce Shop | Bespoke Gift Advisory |
-| :--- | :--- | :--- |
-| **Interaction** | Anonymous transactional exchanges | High-touch therapeutic consulting sessions |
-| **Pricing Power** | Vulnerable to price wars & discounts | High-margin, low price sensitivity |
-| **Emotional Value** | Zero emotional connection | Deep emotional storytelling & keepsake curation |
-| **Moat / Advantage** | Easily replicable | Defensible service advantage & long-term trust |
+## Career-ready design outputs
+
+### CONTENT
+- Thumbnails
+- Banners
+- Covers
+
+### BRANDING
+- Logos
+- Identity
+- Guidelines
+
+### SOCIAL
+- Posts
+- Stories
+- Campaigns
+
+### PRODUCT
+- UI
+- UX
+- Design systems
+
+### PRINT
+- Cards
+- Packaging
+- Brochures
+
+### MARKETING
+- Posters
+- Flyers
+- Ads
 
 ---
 
-## ⚖️ Strategic Advantages & Challenges
+# 04 — THE DESIGN WORKFLOW
 
-### Key Advantages
-* **Zero Overhead:** No physical retail space or rent expenses required.
-* **High Margins:** High emotional pricing resilience and strong profit margins.
-* **Differentiated:** Deeply insulated from generic online commodity stores.
+## A professional project is a process, not a single click
 
-### Challenges & Mitigation
-* **Scalability Bottleneck:** Limited by founder advisory time. *(Mitigated via capped commission slots).*
-* **Emotional Intensity:** Managing client emotional intensity during therapeutic sessions.
-* **Remote Trust:** Building initial professional trust entirely remotely through mobile platforms.
+### 01 — Brief
+Goal, audience, deliverables
+
+### 02 — Research
+References, competitors, mood
+
+### 03 — Concept
+Sketch, direction, visual idea
+
+### 04 — Design
+Layout, type, color, imagery
+
+### 05 — Review
+Feedback + revisions
+
+### 06 — Deliver
+Final files + usage formats
+
+> **Tip:** show the process in your portfolio — clients buy confidence, not just a final image.
 
 ---
 
-## 📋 Project Information
+# 05 — TOOLKIT
 
-* **Assignment:** Moneycontrol Classroom Assignment — Business Model Innovation
-* **Presenters:** Ojaswi & Aryan
-* **Status:** Ready for Evaluation
+## Choose tools by the job, not by the hype
+
+### Canva
+Fast social, presentations & brand content  
+Templates + AI workflows
+
+### Illustrator
+Logos, icons & vector graphics  
+Scalable artwork
+
+### GIMP
+Free image editing option  
+Open-source workflow
+
+### Figma
+UI/UX, prototypes & collaboration  
+Design systems + handoff
+
+### Photoshop
+Photo editing & compositing  
+Raster + image manipulation
+
+---
+
+# 06 — THE 2026 SHIFT
+
+## AI changes the workflow — not the need for taste
+
+### AI
+**Generate**  
+Explore more directions
+
+### REFINE
+Remove repetitive work  
+Speed up editing
+
+### HUMAN JUDGMENT
+Choose what is right  
+For the audience
+
+### BRAND THINKING
+Keep work  
+Consistent
+
+> **Best positioning: AI-assisted + human-directed.**
+
+---
+
+# 07 — HOW TO LEARN
+
+## A practical 6-stage roadmap
+
+### 01 — Observe
+Study strong layouts and rebuild them.
+
+### 02 — Learn
+Master typography, color and composition.
+
+### 03 — Tool up
+Become fluent in one primary tool.
+
+### 04 — Practice
+Create small briefs every day.
+
+### 05 — Portfolio
+Show 6–10 strong, explained projects.
+
+### 06 — Sell
+Start with a niche and real clients.
+
+**Learn → Make → Practice → Show → Sell**
+
+---
+
+# 08 — SERVICES YOU CAN SELL
+
+## Package outcomes, not random design tasks
+
+### CREATOR PACK
+YouTube thumbnails + banners + covers
+
+### BRAND STARTER
+Logo + colors + type + basic usage
+
+### SOCIAL KIT
+10 posts + 5 stories + templates
+
+### BUSINESS KIT
+Cards + flyer + digital banner
+
+---
+
+# 09 — WHO BUYS
+
+## Start local, then move into niches with repeat demand
+
+### Events
+Posters • invitations • promos
+
+### Local businesses
+Cafés • shops • salons
+
+### Creators
+YouTubers • Instagram
+
+### Coaches
+Social content • course graphics
+
+### Startups
+Launch assets • pitch decks
+
+### Agencies
+Overflow production support
+
+**Choose one niche → understand its content needs → build a focused portfolio.**
+
+---
+
+# 10 — HOW TO GET CLIENTS
+
+## A simple acquisition loop for a beginner
+
+### 01 — Build proof
+Create 6–10 niche-specific samples.
+
+### 02 — Reach out
+Send short, personalized messages.
+
+### 03 — Offer value
+Show one useful improvement.
+
+### 04 — Deliver well
+Clear timeline + revisions.
+
+### 05 — Ask again
+Referral + retainer + next project.
+
+> **Portfolio + outreach + reliability = repeat business**
+
+---
+
+# 11 — PRICING & EARNING
+
+## Entry-level examples
+
+### Thumbnail
+₹100–₹300  
+Fast turnaround
+
+### Business Card
+₹200–₹500  
+Front/back + source
+
+### Logo
+₹500–₹1,500  
+Concept + revisions
+
+### Poster / Flyer
+₹200–₹500  
+Print + digital
+
+> **Upgrade path:** single task → bundle → monthly retainer
+
+---
+
+# 12 — BUILD A PORTFOLIO THAT SELLS
+
+## Show outcomes, not just pretty pictures
+
+### LOGO
+Brand identity  
+Brief → concept → final
+
+### SOCIAL
+Campaign  
+Brief → concept → final
+
+### THUMB
+Creator  
+Brief → concept → final
+
+**6–10 strong projects**
+
+**One niche • One visual style • Clear case studies**
+
+---
+
+# DESIGN APPLICATION
+
+## Poster Design — Practical Example
+
+### CREATE
+**YOUR VISUAL STORY**
+
+### WHERE TO USE
+- Events
+- Offers
+- Business promotions
+- Social media
+- Print
+- Advertisements
+
+### WHAT MAKES IT WORK
+- Strong headline = hierarchy
+- Different sizes = contrast
+- Open space = readability
+- Simple message = clarity
+
+**POSTER • EVENT • PROMOTION**
+
+**Clear hierarchy + contrast + whitespace**
+
+### CALL TO ACTION
+
+---
+
+# THE TAKEAWAY
+
+## From skill to business
+
+**Design is a skill.**  
+**A portfolio is proof.**  
+**A system is a business.**
+
+### LEARN
+Learn the fundamentals → use modern tools → sell outcomes → keep improving.
+
+### CREATE
+Build focused work
+
+### SELL
+
+### GROW
+
+**01 → 02 → 03 → 04**
+
+---
+
+# THANK YOU
+
+**Ayush Khuntiya • BCA 5th Semester**
+
